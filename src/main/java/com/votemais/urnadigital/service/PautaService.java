@@ -1,15 +1,14 @@
 package com.votemais.urnadigital.service;
 
-import com.votemais.urnadigital.domain.Pauta;
 import com.votemais.urnadigital.domain.daos.PautaDAO;
+import com.votemais.urnadigital.domain.dtos.FechamentoUrnaDTO;
 import com.votemais.urnadigital.domain.dtos.PautaDTO;
 import com.votemais.urnadigital.domain.enums.StatusAberturaEnum;
 import com.votemais.urnadigital.repository.interfaces.PautaRepository;
 import com.votemais.urnadigital.service.interfaces.PautaServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
-
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -20,15 +19,14 @@ public class PautaService implements PautaServiceInterface {
 
     @Override
     public String encerrar(String idPauta) {
-        // Atualizar o Banco com o Fechamento da Pauta
-        // Metodo Private de Contabilizar
-        // Retornar Quantidade de Sim e Não
-        return "A pauta solicitada foi encerrada. Segue o retorno: " + "";
+        pautaRepository.AlteraStatusPauta(idPauta, StatusAberturaEnum.FECHADO);
+        Optional<PautaDAO> pauta = pautaRepository.findById(UUID.fromString(idPauta));
+        return "A pauta solicitada foi encerrada. Segue o retorno: " + pauta.toString();
     }
 
     @Override
     public String abrir(String idPauta) {
-        pautaRepository.abrir(idPauta);
+        pautaRepository.AlteraStatusPauta(idPauta, StatusAberturaEnum.ABERTO);
         return "A pauta solicitada foi aberta; boa sessão!";
     }
 
