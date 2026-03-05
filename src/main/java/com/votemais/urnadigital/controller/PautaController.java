@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.UUID;
+
 @RestController
 public class PautaController implements PautaControllerInterface {
 
@@ -15,13 +17,15 @@ public class PautaController implements PautaControllerInterface {
 
     @Override
     public ResponseEntity<String> encerrar(String idPauta) {
-        String msgRetorno = pautaService.encerrar(idPauta);
+        UUID uuid = UUID.fromString(idPauta);
+        String msgRetorno = pautaService.encerrar(uuid);
         return ResponseEntity.ok().body(msgRetorno);
     }
 
     @Override
     public ResponseEntity<String> abrir(String idPauta) {
-        String msgRetorno = pautaService.abrir(idPauta);
+        UUID uuid = UUID.fromString(idPauta);
+        String msgRetorno = pautaService.abrir(uuid);
         return ResponseEntity.ok().body(msgRetorno);
     }
 

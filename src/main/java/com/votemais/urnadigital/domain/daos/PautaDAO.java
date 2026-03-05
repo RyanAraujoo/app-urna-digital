@@ -2,16 +2,29 @@ package com.votemais.urnadigital.domain.daos;
 
 import com.votemais.urnadigital.domain.enums.StatusAberturaEnum;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import java.util.UUID;
 
-import static com.votemais.urnadigital.domain.enums.StatusAberturaEnum.FECHADO;
-
 @Entity
 @Table(name = "tb_pauta")
-@AllArgsConstructor
+@Getter
 public class PautaDAO {
+
+    public PautaDAO(String nome,
+                         String endereco,
+                         int tempoEmMinutos,
+                         int quantidadeDeVotosSim,
+                         int quantidadeDeVotosNao,
+                         StatusAberturaEnum statusAbertura) {
+
+        this.nome = nome;
+        this.endereco = endereco;
+        this.tempoEmMinutos = tempoEmMinutos;
+        this.quantidadeDeVotosSim = quantidadeDeVotosSim;
+        this.quantidadeDeVotosNao = quantidadeDeVotosNao;
+        this.statusAbertura = statusAbertura;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

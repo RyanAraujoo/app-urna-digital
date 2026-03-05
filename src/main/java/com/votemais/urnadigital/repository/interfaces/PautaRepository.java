@@ -11,15 +11,16 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
 import java.util.UUID;
 
-@EnableJpaRepositories
-@Repository
 public interface PautaRepository extends JpaRepository<PautaDAO, UUID> {
 
         @Modifying
         @Transactional
         @Query("update PautaDAO p set p.statusAbertura = :status where p.id = :id")
-        int AlteraStatusPauta(@Param("id") String idPauta,
+        int AlteraStatusPauta(@Param("id") UUID idPauta,
                               @Param("status") StatusAberturaEnum status);
+
+        Optional<PautaDAO> findByNome(String nome);
 }
