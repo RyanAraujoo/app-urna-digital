@@ -1,6 +1,7 @@
 package com.votemais.urnadigital.service;
 
 import com.votemais.urnadigital.domain.daos.PautaDAO;
+import com.votemais.urnadigital.domain.dtos.PautaDTO;
 import com.votemais.urnadigital.domain.enums.StatusAberturaEnum;
 import com.votemais.urnadigital.repository.interfaces.PautaRepository;
 import org.assertj.core.api.Assert;
@@ -45,5 +46,21 @@ class PautaServiceTest {
         verify(this.pautaRepository,times(1)).AlteraStatusPauta(any(),any());
 
         assertThat(retorno).isEqualTo("A pauta solicitada foi encerrada. Segue o retorno: Sim: 90 || Não: 100");
+    }
+
+    @Test
+    @DisplayName("Deve Abrir uma Pauta para Permitir Contabilizacao de Votos")
+    void abrir() {
+        UUID pautaID = UUID.randomUUID();
+        this.pautaService.abrir(pautaID);
+        verify(this.pautaRepository,times(1)).AlteraStatusPauta(any(),any());
+    }
+
+    @Test
+    @DisplayName("Deve permitir cadastrar uma pauta para votacao")
+    void cadastrar() {
+        PautaDTO pauta = new PautaDTO("EntregaMais1","Av.PresidenteDutra301",60);
+        this.pautaService.cadastrar(pauta);
+        verify(this.pautaRepository,times(1)).save(any());
     }
 }
