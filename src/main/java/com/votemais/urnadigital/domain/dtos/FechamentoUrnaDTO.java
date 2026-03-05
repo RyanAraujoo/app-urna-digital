@@ -10,4 +10,8 @@ import lombok.Setter;
 public class FechamentoUrnaDTO {
     private int quantTotalSim;
     private int quantTotalNao;
+
+    public String returnFechamento() {
+        return "Sim: " + this.getQuantTotalSim() + " || Não: " + this.getQuantTotalNao();
+    }
 }

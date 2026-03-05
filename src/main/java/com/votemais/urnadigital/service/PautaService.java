@@ -1,6 +1,7 @@
 package com.votemais.urnadigital.service;
 
 import com.votemais.urnadigital.domain.daos.PautaDAO;
+import com.votemais.urnadigital.domain.dtos.FechamentoUrnaDTO;
 import com.votemais.urnadigital.domain.dtos.PautaDTO;
 import com.votemais.urnadigital.domain.enums.StatusAberturaEnum;
 import com.votemais.urnadigital.repository.interfaces.PautaRepository;
@@ -20,7 +21,13 @@ public class PautaService implements PautaServiceInterface {
     public String encerrar(UUID idPauta) {
         pautaRepository.AlteraStatusPauta(idPauta, StatusAberturaEnum.FECHADO);
         Optional<PautaDAO> pauta = pautaRepository.findById(idPauta);
-        return "A pauta solicitada foi encerrada. Segue o retorno: " + pauta.toString();
+
+        FechamentoUrnaDTO fechamentoPauta = new FechamentoUrnaDTO(
+                pauta.get().getQuantidadeDeVotosSim(),
+                pauta.get().getQuantidadeDeVotosNao()
+        );
+
+        return "A pauta solicitada foi encerrada. Segue o retorno: " + fechamentoPauta.returnFechamento() ;
     }
 
     @Override

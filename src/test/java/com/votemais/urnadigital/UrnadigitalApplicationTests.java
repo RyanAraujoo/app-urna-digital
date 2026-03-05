@@ -8,8 +8,6 @@ class UrnadigitalApplicationTests {
 
 	@Test
 	void contextLoads() {
-
-		assert true == true;
 	}
 
 }
