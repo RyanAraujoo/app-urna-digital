@@ -5,7 +5,7 @@ import com.votemais.urnadigital.domain.dtos.AssociadoDTO;
 import com.votemais.urnadigital.service.AssociadoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.Mapping;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +14,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/associado")
+@ControllerAdvice
 public class AssociadoController implements AssociadoControllerInterface {
 
     @Autowired

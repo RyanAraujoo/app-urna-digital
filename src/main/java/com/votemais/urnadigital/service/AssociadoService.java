@@ -3,6 +3,7 @@ package com.votemais.urnadigital.service;
 import com.votemais.urnadigital.domain.Associado;
 import com.votemais.urnadigital.domain.Voto;
 import com.votemais.urnadigital.domain.dtos.AssociadoDTO;
+import com.votemais.urnadigital.exceptions.NotFoundException;
 import com.votemais.urnadigital.repository.interfaces.AssociadoRepository;
 import com.votemais.urnadigital.service.interfaces.AssociadoServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,7 @@ public class AssociadoService implements AssociadoServiceInterface {
         Optional<Associado> associado = associadoRepository.findById(idAssociado);
 
         if (associado.isEmpty()) {
-            throw new Exception("Associado não identificado.");
+            throw new NotFoundException("Associado não identificado.");
         }
 
         return associado.get();
