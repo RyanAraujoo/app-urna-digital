@@ -43,10 +43,10 @@ public class AssociadoService implements AssociadoServiceInterface {
     }
     private void verificarVotoRealizado(UUID idPauta, Set<Voto> votosDoAssociado) throws Exception {
         Set<Voto> votoDaPauta = votosDoAssociado.stream()
-                .filter(voto -> voto.getId() == idPauta)
+                .filter(voto -> voto.getId().equals(idPauta))
                 .collect(Collectors.toSet());
 
-        if (votoDaPauta.isEmpty()) {
+        if (!votoDaPauta.isEmpty()) {
             throw new Exception("Voto já realizado para a Pauta.");
         }
     }
@@ -64,7 +64,7 @@ public class AssociadoService implements AssociadoServiceInterface {
 
         associado.setVoto(voto);
 
-        this.associadoRepository.AtualizarVotosDoAssociado((Voto) associado.getVotos(), idAssociado);
+        this.associadoRepository.save(associado);
 
         return "Voto Realizado com Sucesso para a Pauta" + idPauta.toString();
     }
