@@ -1,5 +1,6 @@
 package com.votemais.urnadigital.domain;
 
+import com.votemais.urnadigital.domain.daos.PautaDAO;
 import com.votemais.urnadigital.domain.enums.RoleEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -22,6 +23,7 @@ import java.util.UUID;
 @Table(name = "tb_associado")
 public class Associado extends Pessoa implements UserDetails {
     @OneToMany(mappedBy = "associado")
+    @PrimaryKeyJoinColumn
     private Set<Voto> votos;
 
     @Column
@@ -36,10 +38,10 @@ public class Associado extends Pessoa implements UserDetails {
     @Column
     private String CPF;
 
-    private String votar(UUID idPauta, Associado associado) {
-        Voto voto = new Voto(idPauta, associado);
+    private String votar(PautaDAO pauta, Associado associado) {
+        Voto voto = new Voto(pauta, associado);
         setVoto(voto);
-        return "Voto Registrado para Pauta" + idPauta;
+        return "Voto Registrado para Pauta" + pauta.getNome();
     }
 
     public void setVoto(Voto voto) {

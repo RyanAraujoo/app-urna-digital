@@ -1,9 +1,11 @@
 package com.votemais.urnadigital.domain.daos;
 
+import com.votemais.urnadigital.domain.Voto;
 import com.votemais.urnadigital.domain.enums.StatusAberturaEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -47,4 +49,8 @@ public class PautaDAO {
 
     @Column
     private StatusAberturaEnum statusAbertura;
+
+    @OneToMany(mappedBy = "pauta")
+    @PrimaryKeyJoinColumn
+    private List<Voto> votos;
 }

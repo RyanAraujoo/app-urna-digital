@@ -13,6 +13,7 @@ import static com.votemais.urnadigital.domain.enums.StatusAberturaEnum.FECHADO;
 @Setter
 @AllArgsConstructor
 public class Pauta {
+
     private UUID id = UUID.randomUUID();
     private String nome;
     private String endereco;

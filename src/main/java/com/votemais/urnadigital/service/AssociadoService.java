@@ -1,11 +1,14 @@
 package com.votemais.urnadigital.service;
 
 import com.votemais.urnadigital.domain.Associado;
+import com.votemais.urnadigital.domain.Pauta;
 import com.votemais.urnadigital.domain.Voto;
+import com.votemais.urnadigital.domain.daos.PautaDAO;
 import com.votemais.urnadigital.domain.dtos.AssociadoDTO;
 import com.votemais.urnadigital.domain.exceptions.NotFoundException;
 import com.votemais.urnadigital.domain.records.RegisterDTO;
 import com.votemais.urnadigital.repository.interfaces.AssociadoRepository;
+import com.votemais.urnadigital.repository.interfaces.PautaRepository;
 import com.votemais.urnadigital.service.interfaces.AssociadoServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +25,9 @@ public class AssociadoService implements AssociadoServiceInterface {
 
     @Autowired
     AssociadoRepository associadoRepository;
+
+    @Autowired
+    PautaRepository pautaRepository;
 
     @Override
     public String criarAssociado(RegisterDTO associadoDto) {
@@ -56,7 +62,7 @@ public class AssociadoService implements AssociadoServiceInterface {
     }
     private void verificarVotoRealizado(UUID idPauta, Set<Voto> votosDoAssociado) throws Exception {
         Set<Voto> votoDaPauta = votosDoAssociado.stream()
-                .filter(voto -> voto.getId().equals(idPauta))
+                .filter(voto -> voto.getVotoId().equals(idPauta))
                 .collect(Collectors.toSet());
 
         if (!votoDaPauta.isEmpty()) {
@@ -67,11 +73,12 @@ public class AssociadoService implements AssociadoServiceInterface {
     @Override
     public String votar(UUID idPauta, UUID idAssociado) throws Exception {
         Associado associado = this.buscarAssociado(idAssociado);
+        Optional<PautaDAO> pauta = this.pautaRepository.findById(idPauta);
 
         this.verificarVotoRealizado(idPauta, associado.getVotos());
 
         Voto voto = new Voto(
-                idPauta,
+                pauta.get(),
                 associado
         );
 
