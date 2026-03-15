@@ -1,4 +1,4 @@
-package com.votemais.urnadigital.exceptions;
+package com.votemais.urnadigital.domain.exceptions;
 
 public class NotFoundException extends RuntimeException {
     public NotFoundException() { super("Não Encontrado.");}

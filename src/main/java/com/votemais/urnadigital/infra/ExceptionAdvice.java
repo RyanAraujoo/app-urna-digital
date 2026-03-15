@@ -1,6 +1,6 @@
 package com.votemais.urnadigital.infra;
 
-import com.votemais.urnadigital.exceptions.NotFoundException;
+import com.votemais.urnadigital.domain.exceptions.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

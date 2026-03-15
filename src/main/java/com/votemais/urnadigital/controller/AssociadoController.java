@@ -2,6 +2,7 @@ package com.votemais.urnadigital.controller;
 
 import com.votemais.urnadigital.controller.interfaces.AssociadoControllerInterface;
 import com.votemais.urnadigital.domain.dtos.AssociadoDTO;
+import com.votemais.urnadigital.domain.records.RegisterDTO;
 import com.votemais.urnadigital.service.AssociadoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ public class AssociadoController implements AssociadoControllerInterface {
 
     @Override
     @PostMapping
-    public ResponseEntity<String> criarAssociado(AssociadoDTO associadoDto) {
+    public ResponseEntity<String> criarAssociado(RegisterDTO associadoDto) {
         String msg = this.associadoService.criarAssociado(associadoDto);
         return ResponseEntity.ok(msg);
     }

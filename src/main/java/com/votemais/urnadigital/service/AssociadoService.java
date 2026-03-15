@@ -3,10 +3,13 @@ package com.votemais.urnadigital.service;
 import com.votemais.urnadigital.domain.Associado;
 import com.votemais.urnadigital.domain.Voto;
 import com.votemais.urnadigital.domain.dtos.AssociadoDTO;
-import com.votemais.urnadigital.exceptions.NotFoundException;
+import com.votemais.urnadigital.domain.exceptions.NotFoundException;
+import com.votemais.urnadigital.domain.records.RegisterDTO;
 import com.votemais.urnadigital.repository.interfaces.AssociadoRepository;
 import com.votemais.urnadigital.service.interfaces.AssociadoServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -21,14 +24,23 @@ public class AssociadoService implements AssociadoServiceInterface {
     AssociadoRepository associadoRepository;
 
     @Override
-    public String criarAssociado(AssociadoDTO associadoDto) {
-        Associado novoAssociado = new Associado(
-            associadoDto.getCpf(),
-            associadoDto.getNome(),
-            associadoDto.getEndereco(),
-            associadoDto.getIdade()
+    public String criarAssociado(RegisterDTO associadoDto) {
+        if (this.associadoRepository.findByLogin(associadoDto.userName()) != null) { throw  new RuntimeException("Usuario já existe.");}
+
+        var pass = new BCryptPasswordEncoder().encode(associadoDto.password());
+
+        Associado associado = new Associado(
+                associadoDto.cpf(),
+                associadoDto.nome(),
+                associadoDto.endereco(),
+                associadoDto.idade(),
+                pass,
+                associadoDto.userName(),
+                associadoDto.role()
         );
-        associadoRepository.save(novoAssociado);
+
+        this.associadoRepository.save(associado);
+
         return "Associado criado com Sucesso!";
     }
 
