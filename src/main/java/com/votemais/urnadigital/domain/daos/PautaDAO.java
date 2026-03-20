@@ -3,7 +3,9 @@ package com.votemais.urnadigital.domain.daos;
 import com.votemais.urnadigital.domain.Voto;
 import com.votemais.urnadigital.domain.enums.StatusAberturaEnum;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.UUID;
@@ -11,6 +13,8 @@ import java.util.UUID;
 @Entity
 @Table(name = "tb_pauta")
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class PautaDAO {
 
     public PautaDAO(String nome,

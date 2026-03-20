@@ -3,34 +3,39 @@ package com.votemais.urnadigital.controller;
 import com.votemais.urnadigital.controller.interfaces.PautaControllerInterface;
 import com.votemais.urnadigital.domain.dtos.PautaDTO;
 import com.votemais.urnadigital.service.PautaService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
 @RestController
+@RequestMapping(value = "/pauta")
 public class PautaController implements PautaControllerInterface {
 
     @Autowired
     private PautaService pautaService;
 
     @Override
-    public ResponseEntity<String> encerrar(String idPauta) {
+    @PostMapping("/encerrar/{id}")
+    public ResponseEntity<String> encerrar(@PathVariable("id") @Valid String idPauta) {
         UUID uuid = UUID.fromString(idPauta);
         String msgRetorno = pautaService.encerrar(uuid);
         return ResponseEntity.ok().body(msgRetorno);
     }
 
     @Override
-    public ResponseEntity<String> abrir(String idPauta) {
+    @PostMapping("/abrir/{id}")
+    public ResponseEntity<String> abrir(@PathVariable("id") @Valid String idPauta) {
         UUID uuid = UUID.fromString(idPauta);
         String msgRetorno = pautaService.abrir(uuid);
         return ResponseEntity.ok().body(msgRetorno);
     }
 
     @Override
-    public ResponseEntity<String> cadastrar(PautaDTO pauta) {
+    @PostMapping("/cadastrar")
+    public ResponseEntity<String> cadastrar(@RequestBody @Valid PautaDTO pauta) {
         String msgRetorno = pautaService.cadastrar(pauta);
         return ResponseEntity.ok().body(msgRetorno);
     }
